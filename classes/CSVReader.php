@@ -4,7 +4,7 @@ class CSVReader
 {
     private array $rawData;
     private array $header = [];
-    private string $headerSeparator = ";";
+    private string $headerSeparator = ",";
     private array $data = [];
     private string $dataSeparator = ",";
 
