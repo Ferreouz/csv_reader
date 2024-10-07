@@ -3,14 +3,14 @@ services:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_DATABASE: your_database_name
+      MYSQL_ROOT_PASSWORD: your_root_password
       MYSQL_USER: your_username
       MYSQL_PASSWORD: your_user_password
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./database:/docker-entrypoint-initdb.d  # Mount the init directory
+      - ./database/init.sql:/docker-entrypoint-initdb.d/1.sql  # Mount the init directory
   
   backend:
     build:
@@ -18,8 +18,8 @@ services:
       dockerfile: Dockerfile
     restart: always
     environment:
+      MYSQL_ROOT_PASSWORD: your_root_password
       MYSQL_HOST: "db:3306"
-      MYSQL_DATABASE: your_database_name
       MYSQL_USER: your_username
       MYSQL_PASSWORD: your_user_password
     ports:

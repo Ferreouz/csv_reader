@@ -1,3 +1,4 @@
 Nome,Sobrenome,Email,Telefone,Endereço,Cidade,CEP,"Data de Nascimento"
 Nome1;a;email1@example.com;55(47)8418-8284;Endere�o1;Cidade1;69796-569;21/10/1969
-Nome1;Sobrenome2;email1@example.com;55(47)8418-8284;Endereço2;Cidade1;69796-569;21/10/1969
+Nome1;Sobrenome2;email1@example.com;55(47)8418-9999;Endereço2;Cidade1;69796-569;21/10/1969
+Nome1;Sobrenome2;email1@example.com;55(47)8418-5555;Endereço2;Cidade1;69796-569;21/10/1969
