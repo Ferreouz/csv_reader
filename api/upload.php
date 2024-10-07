@@ -2,10 +2,6 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'] . "/autoload.php");
 
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-
 header('Content-Type: application/json; charset=utf-8');
 
 use Classes\CSVLine;
@@ -20,8 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 // Check if the file was uploaded without errors
 if (!isset($_FILES['file']) || $_FILES['file']['error'] != UPLOAD_ERR_OK) {
     header("HTTP/1.1 400 Bad Request");
-   
-    echo json_encode(["message" => 'Error ao enviar arquivo: ' . $_FILES['file']['error']]);
+    if($_FILES['file']['error'] === 1) {
+        $message .= "Tamanho do arquivo excede o limite";
+    }
+    echo json_encode(["message" => 'Error ao enviar arquivo: ' . $message ]);
     exit;
 }
 $fileTmpPath = $_FILES['file']['tmp_name'];

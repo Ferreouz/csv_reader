@@ -108,7 +108,6 @@ class DB
     private function insertCampaign(string $campaignName)
     {
         $stmt = $this->pdo->prepare("INSERT INTO campaigns (nome) VALUES (:nome)");
-
         $stmt->bindParam(':nome', $campaignName);
 
         if ($stmt->execute()) {

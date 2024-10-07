@@ -1,43 +1,21 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Campanhas</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        #searchBar {
-            margin-bottom: 20px;
-            padding: 10px;
-            width: 100%;
-            font-size: 16px;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="container mt-5">
 
-<h1>Lista de Campanhas</h1>
-<input type="text" id="searchBar" placeholder="Pesquisar..." onkeyup="fetchCampaignLines()">
+<a href="/">Upload</a>
 
-<table>
-    <thead>
+<h1 class="mb-4">Lista de Campanhas</h1>
+<input type="text" id="searchBar" class="form-control mb-4" placeholder="Pesquisar por Campanha/Telefone" onkeyup="fetchCampaignLines()">
+
+<table class="table table-bordered">
+    <thead class="thead-light">
         <tr>
             <th>ID</th>
             <th>Nome</th>
@@ -53,19 +31,17 @@
         </tr>
     </thead>
     <tbody id="campaignTableBody">
-        <!-- Os dados da campanha serão inseridos aqui -->
     </tbody>
 </table>
 
 <script>
     async function fetchCampaignLines() {
         try {
-            const response = await fetch('/api/search.php?search=' + document.getElementById('searchBar').value); // Substitua pela URL da sua API
+            const response = await fetch('/api/search.php?search=' + encodeURIComponent(document.getElementById('searchBar').value)); // Substitua pela URL da sua API
             if (!response.ok) {
                 throw new Error('Erro ao buscar dados: ' + response.status);
             }
             const data = await response.json();
-            console.log(data)
             populateTable(data.message);
         } catch (error) {
             console.error(error);
@@ -94,27 +70,6 @@
             `;
             tableBody.appendChild(row);
         });
-    }
-
-    function filterTable() {
-        const input = document.getElementById('searchBar');
-        const filter = input.value.toLowerCase();
-        const tableBody = document.getElementById('campaignTableBody');
-        const rows = tableBody.getElementsByTagName('tr');
-
-        for (let i = 0; i < rows.length; i++) {
-            const cells = rows[i].getElementsByTagName('td');
-            let found = false;
-
-            // Check each cell in the row for a match
-            for (let j = 0; j < cells.length; j++) {
-                if (cells[j].textContent.toLowerCase().indexOf(filter) > -1) {
-                    found = true;
-                    break;
-                }
-            }
-            rows[i].style.display = found ? '' : 'none'; // Show or hide row
-        }
     }
 
     window.onload = fetchCampaignLines;
